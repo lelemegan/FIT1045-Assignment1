@@ -52,7 +52,6 @@ def execute_turn(player, player_input):
 
   # Generate updated player
   updated_player = dict(player) # get a new object with same values by using the dict constructor
-  updated_player["stayed"] = False
   updated_player["score"] += dice_sum
   updated_player["at_14"] = updated_player["score"] >= 14
   updated_player["bust"] = updated_player["score"] > 21
