@@ -31,7 +31,7 @@ def execute_turn(player, player_input):
   if player_input == 2:
     # Generate updated player to have stayed to "True"
     updated_player = dict(player) # get a new object with same values by using the dict constructor
-    updated_player["stayed"] = False
+    updated_player["stayed"] = True
     
     # Return the updated player
     return updated_player
