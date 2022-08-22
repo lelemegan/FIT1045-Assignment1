@@ -37,7 +37,7 @@ def multiplayer_game(num_of_players):
       if (player["at_14"]):
         game_options.append(3)
       option = int_input("Please enter an option: ", restricted_to=game_options)
-      player = eexecute_turn(player, option)
+      player = execute_turn(player, option)
       
       
 
