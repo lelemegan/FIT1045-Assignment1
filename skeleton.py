@@ -86,23 +86,38 @@ def cpu_player_choice(score):
   else:
     return 2
 
+
 def display_game_options(player):
-    name = player['name']
-    score = player['score']
-    print('---------', name, '\'s turn', '-----------')
-    print(name, '\'s score:', score)
-    print('1.Roll')
-    print('2.Stay')
-    if score >= 14:
-        print('3.Roll One')
-    return True
+  """
+  Pick random numbers based on the number of dice being inputted
+
+  Arguments:
+    - num_of_dice: Accepts int. This is the number of dice to be rolled.
+
+  Return Value:
+    - A list of 2 elements, 
+      - roll result as a list of integer in position 0, 
+      - Ascii art for dice face in string in position 1
+
+  Implemented by:
+    - Jinwei Liang 30741424
+  """
+  name = player['name']
+  score = player['score']
+  print('---------' + name + '\'s turn', '-----------')
+  print(name + '\'s score:', score)
+  print('1.Roll')
+  print('2.Stay')
+  if score >= 14:
+    print('3.Roll One')
+  return True
 
 
 def display_round_stats(round,players):
-    round+=1
-    print('---------Round', round, '-----------')
-    for player in players:	
-        print(player['name'], 'is at', player['score'])
+  round += 1
+  print('---------Round' + str(round) + '-----------')
+  for player in players:	
+    print(player['name'], 'is at', player['score'])
 
 
 def roll_dice(num_of_dice=1):
@@ -215,7 +230,7 @@ def execute_turn(player, player_input):
   updated_player["bust"] = updated_player["score"] > 21
 
   # Display player status (and respective message if bust)
-  print("{name} is now on {score}".format(name=updated_player["name"], score=updated_player["score"]))
+  print("\n{name} is now on {score}".format(name=updated_player["name"], score=updated_player["score"]))
   if updated_player["bust"]:
     print("{name} goes bust!".format(name=updated_player["name"]))
 
@@ -229,92 +244,133 @@ def end_of_game(players):
   returning false if not else printing the result before returning true.
 
   Arguments:
-    - players: A list of player-dictionary objects
+  - players: A list of player-dictionary objects
 
   Returns True if round has ended or False if not. If true results are
   printed before return.
   """
-  for i in players:
-    if (not i["stayed"]) and (not i["bust"]):
-        return True
+
+  stayed_and_not_busted = []
+  who_busted = []
+  for x in players:
+    #if anyone decides not to stay(continue playing)
+    #and this person is not busted
+    #return False (not end of game yet) 
+    if x["stayed"] == False and x["bust"] == False: 
+        return False
+    #if anyone decides to stay and is not busted
+    #store the score into list
+    elif x["stayed"] == True and x["bust"] == False: #if anyone decides not to stay and is not busted, store score into list
+        stayed_and_not_busted.append(x["score"])
+    elif x["bust"] == True:
+        who_busted.append(x["name"])
+
+  if len(who_busted)==len(players):
+    print("The game is a draw! No one wins :(")
+    return True
+
+  highest_score = max(stayed_and_not_busted)
+  who_has_highest_score = []
+  for x in players:
+    if x["score"] == highest_score:
+      who_has_highest_score.append(x["name"])
+  
+  no_of_highest_score_players = len(who_has_highest_score)
+  if no_of_highest_score_players==1:
+    print(who_has_highest_score[0]+" is the winner!")
+    return True
+  elif no_of_highest_score_players>1:
+    print("The game is a draw! No one wins :(")
+    return True
+
   return False
 
 
 def solo_game():
-    score = 0
-    score_p = 0
-    skip_C = False
-    skip_P = False
-    # Code will opreater until CPU score bigger than 21
-    while score < 21:
-        # If CPU choice roll dice
-        if skip_C == False:
-            cpu_returen = cpu_player_choice(score)
-            # Roll two dice
-            if cpu_returen == 1:
-                num_of_dice = 2
-                roll_results = roll_dice(num_of_dice)
-                print(roll_results[1])
-                score += sum(roll_results[0])
-                print("Computer score",score)
-            # Roll one dice
-            elif cpu_returen == 3:
-                num_of_dice = 1
-                roll_results = roll_dice(num_of_dice)
-                print(roll_results[1])
-                score += sum(roll_results[0])
-                print("Computer score",score)
-            # Skip
-            else:
-                print('Skip')
-                skip_C =  True
-                continue
-        # Play choice roll dice
-        if skip_P == False:
-            # Player input
-            num_of_dice_p = int(input("Please enter the number of dice: "))
-            # Player choice skip
-            if num_of_dice_p > 2:
-                skip_P = True
-                continue
-            # Roll dice returen score
-            roll_results_p = roll_dice(num_of_dice_p)
-            print(roll_results_p[1])
-            score_p += sum(roll_results_p[0])
-            # Play lose
-            if score_p > 21:
-                skip_P = True
-                print("CPU win!!")
-                break
-            # once at 21 can not roll again
-            elif score_p == 21:
-                skip_P = True
-            print("Player score", score_p)
-        # If both skip end game
-        if skip_P == True & skip_C == True:
-            if score > score_p:
-                print("CPU win!!")
-                break
-            elif score == score_p:
-                print("Draw")
-            else:
-                print("You win")
-                break
+  """
+  This function defines a game loop for a solo game of Twenty One against 
+  AI.
+  """
+  raise NotImplementedError
 
 
 def multiplayer_game(num_of_players):
   """
   This function defines a game loop for a local multiplayer game of Twenty One, 
-  where each iteration of the while loop is a round within the game. 
+  where each iteration of the while loop is a round within the game.
+
+  Arguments:
+    - num_of_players: accepts an integer. Represent the number of players.
+
+  Return Value:
+    - None
+
+  Implemented by:
+    - Xuanao Zhao 33332835
   """
-  raise NotImplementedError
+  
+  # define the round number and initalize it to 0
+  round_num = 0
+  # define a template player to generate players
+  player_template = {
+    'name': '',
+    'score': 0,
+    'stayed': False,
+    'at_14': False,
+    'bust': False
+  }
+
+  # generate players
+  players = {} # this dict contains a list of players with it's name being the key
+  for i in range(1, num_of_players+1):
+    # create a new dict object based on the template
+    player = dict(player_template)
+    # update the player name and store them into the players dict
+    new_name = f"Player {i}"
+    player["name"] = new_name
+    players[new_name] = player
+  
+  # game loop
+  while True:
+    display_round_stats(round_num, list(players.values()))
+    # each loop, every player will get a turn except "stayed" and "busted"
+    for player_name in players.keys():
+      # get the player
+      player = players[player_name]
+
+      # skip the player's turn if they are true for "bust" or "stayed"
+      if (player["bust"] or player["stayed"]):
+        continue
       
+      # display the game options for a player
+      display_game_options(player)
+
+      # define a list of acceptable options
+      game_options = [1,2]
+      # append option 3 to the acceptable options
+      if (player["at_14"]):
+        game_options.append(3)
+      
+      # get user input for options
+      option = int_input("Please enter an option: ", restricted_to=game_options)
+
+      # display and update the player object after executing each turn
+      players[player["name"]] = execute_turn(player, option)
+      
+      # check for "end-of-gae", prints who won or draw if EOG
+      if (end_of_game(list(players.values()))):
+        return
+
+    # for each round, round number incremnts by 1
+    round_num += 1
+
 
 def main():
   """
   Defines the main loop that allows the player to start a game, view rules or quit.
   """
-  solo_game()
+  
+  multiplayer_game(3)
 
 
 main()
