@@ -57,7 +57,7 @@ def execute_turn(player, player_input):
   updated_player["bust"] = updated_player["score"] > 21
 
   # Display player status (and respective message if bust)
-  print("{name} is now on {score}".format(name=updated_player["name"], score=updated_player["score"]))
+  print("\n{name} is now on {score}".format(name=updated_player["name"], score=updated_player["score"]))
   if updated_player["bust"]:
     print("{name} goes bust!".format(name=updated_player["name"]))
 
