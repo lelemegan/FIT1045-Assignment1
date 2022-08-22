@@ -39,6 +39,7 @@ def multiplayer_game(num_of_players):
       option = int_input("Please enter an option: ", restricted_to=game_options)
       player = execute_turn(player, option)
       
-      
+      if (end_of_game(players)):
+        break
 
     round_num += 1
