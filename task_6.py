@@ -36,7 +36,7 @@ def multiplayer_game(num_of_players):
   
   # game loop
   while True:
-    display_round_stats(round_num, players)
+    display_round_stats(round_num, list(players.values()))
     # each loop, every player will get a turn except "stayed" and "busted"
     for player_name in players.keys():
       # get the player
