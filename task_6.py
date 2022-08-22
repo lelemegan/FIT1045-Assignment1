@@ -63,7 +63,7 @@ def multiplayer_game(num_of_players):
       
       # check for "end-of-gae", prints who won or draw if EOG
       if (end_of_game(list(players.values()))):
-        break
+        return
 
     # for each round, round number incremnts by 1
     round_num += 1
