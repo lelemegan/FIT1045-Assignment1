@@ -1,18 +1,19 @@
-playersss = [{'name': 'Player 1', 'score': 20, 'stayed': True, 'at_14': True, 'bust': False},
-           {'name': 'Player 2', 'score': 17, 'stayed': True, 'at_14': True, 'bust': False},
-           {'name': 'Player 3', 'score': 19, 'stayed': True, 'at_14': True, 'bust': False},
-           {'name': 'Player 4', 'score': 19, 'stayed': True, 'at_14': True, 'bust': False}]
-
 def end_of_game(players):
     """
     Takes the list of all players and determines if the game has finished,
     returning false if not else printing the result before returning true.
 
     Arguments:
-    - players: A list of player-dictionary objects
+        - players: A list of player-dictionary objects
 
-    Returns True if round has ended or False if not. If true results are
-    printed before return.
+    Returns Value:
+        - Boolean
+          True if round has ended or False if not. If true results are
+          printed before return.
+
+    Implemented by:
+        - Tiong Le Megan 33332053
+
     """
 
     stayed_and_not_busted = []
@@ -49,5 +50,3 @@ def end_of_game(players):
         return True
 
     return False
-
-end_of_game(playersss)
