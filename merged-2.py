@@ -1,6 +1,32 @@
 """
 Group name: F4
-Authors:
+Authors: 
+    - Xuanao Zhao 33332835
+    - Tiong Le Megan 33332053
+    - Jinwei Liang 30741424
+    - Xinrong Cai 33048118
+
+The function body of the following function 
+
+ - "display_game_options"
+ - "display_round_stats" 
+ - "roll_dice"
+ - "execute_turn"
+ - "end_of_game"
+ - "solo_game"
+ - "multiplayer_game"
+ - "main"
+
+has the following license applied:
+
+ Copyright (c) 2022 Xuanao Zhao, Tiong Le Megam, Jinwei Liang, Xinrong Cai
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 """
 
 import time
@@ -88,35 +114,52 @@ def cpu_player_choice(score):
 
 
 def display_game_options(player):
-    """
-    Prints the game options depending on if a player's score is
-    >= 14.
-    
-    Arguments:
-        - player: A player dictionary object
-    """
-    name = player['name']
-    score = player['score']
-    print('------------' + name + '\'s turn------------')
-    print(name + '\'s score:', score)
-    print('1. Roll')
-    print('2. Stay')
-    if score >= 14:
-        print('3. Roll One')
-    return True
+  """
+  The purpose of the function is to define the value of player dictionery
+  
+  Argument:
+    - name is equal to the name value in player dictionary
+    - score is equal to the score value in play dictionary
+
+  Return value:
+    - System will return Roll one if player score is equal or greater than 14
+    - System will return stay if play score is less than 14
+
+  Implemented by Xinrong Cai 33048118
+  """
+
+  # The purpose of the function is to define the value of player dictionary.
+  name = player['name']
+  score = player['score']
+  turn='\'s turn'
+  a=str('---------')+str(name)+str(turn)+str('---------') # Print dashed lines as required by task instruction
+  print(a)
+  print('1.Roll')
+  print('2.Stay')
+  if score >= 14: # The purpose of this function is to check the score value in each player dictionery.
+    print('3.Roll One') # If player score value is equal or greater than 14, player has an option of "Roll one".
+  return True
 
 
 def display_round_stats(round,players):
     """
-    Print the round statistics provided a list of players.
+    The purpose of the function is to count the number of rounds for each player
 
-    Arguments:
-        - round: Integer for round number
-        - players: A list of player-dictionary objects
+    Argument:
+     - Round initially starts with 0
+     - round+=1 indicates that the times of round will increase by 1 if player's player dictionary is identified
+
+    Return:
+     - It will return player name and player score.
+
+    Implemented by Xinrong Cai 33048118
     """
-    print('-----------Round ' + str(round) + '-----------')
+
+    b='---------round'
+    c=str(round)+str('---------')
+    print(b,c) # Print line17 and line18 at the same line
     for player in players:
-        print(player['name'],'is at',player['score'])
+        print(player['name'], 'is at', player['score']) # Print player name and player's score value in player dictionery.
 
 
 def roll_dice(num_of_dice=1):
@@ -142,29 +185,29 @@ def roll_dice(num_of_dice=1):
 
   # Generate the Diagram of Dice Faces
   die_art = {
-      1: ["┌─────────┐", "│         │", "│    ●    │", "│         │", "└─────────┘"],
-      2: ["┌─────────┐", "│  ●      │", "│         │", "│      ●  │", "└─────────┘"],
-      3: ["┌─────────┐", "│  ●      │", "│    ●    │", "│      ●  │", "└─────────┘"],
-      4: ["┌─────────┐", "│  ●   ●  │", "│         │", "│  ●   ●  │", "└─────────┘"],
-      5: ["┌─────────┐", "│  ●   ●  │", "│    ●    │", "│  ●   ●  │", "└─────────┘"],
-      6: ["┌─────────┐", "│  ●   ●  │", "│  ●   ●  │", "│  ●   ●  │", "└─────────┘"]
-    }
+    1: ["┌─────────┐", "│         │", "│    ●    │", "│         │", "└─────────┘"],
+    2: ["┌─────────┐", "│  ●      │", "│         │", "│      ●  │", "└─────────┘"],
+    3: ["┌─────────┐", "│  ●      │", "│    ●    │", "│      ●  │", "└─────────┘"],
+    4: ["┌─────────┐", "│  ●   ●  │", "│         │", "│  ●   ●  │", "└─────────┘"],
+    5: ["┌─────────┐", "│  ●   ●  │", "│    ●    │", "│  ●   ●  │", "└─────────┘"],
+    6: ["┌─────────┐", "│  ●   ●  │", "│  ●   ●  │", "│  ●   ●  │", "└─────────┘"]
+  }
   dice_row = []
   dice_row_to_str =''
   show_dice_face = ''
   # Go thought each row of dice
   for row_of_dice in range(5):
-      temporary_storage = []
-      # Go thought each dice
-      for number_of_dice in range(len(roll_results)):
-          x = roll_results[number_of_dice]
-          temporary_storage.append(die_art[x][row_of_dice])
-      # Combine same row for all dice
-      dice_row_to_str = ''.join(temporary_storage)
-      dice_row.append(dice_row_to_str)
+    temporary_storage = []
+    # Go thought each dice
+    for number_of_dice in range(len(roll_results)):
+      x = roll_results[number_of_dice]
+      temporary_storage.append(die_art[x][row_of_dice])
+    # Combine same row for all dice
+    dice_row_to_str = ''.join(temporary_storage)
+    dice_row.append(dice_row_to_str)
   # Combin final result
   if row_of_dice == 4:
-     show_dice_face = '\n'.join(dice_row) + '\n'
+    show_dice_face = '\n'.join(dice_row) + '\n'
   else:
     show_dice_face = '\n'.join(dice_row)
 
@@ -239,51 +282,56 @@ def execute_turn(player, player_input):
 
 
 def end_of_game(players):
-  """
-  Takes the list of all players and determines if the game has finished,
-  returning false if not else printing the result before returning true.
+    """
+    Takes the list of all players and determines if the game has finished,
+    returning false if not else printing the result before returning true.
 
-  Arguments:
-  - players: A list of player-dictionary objects
+    Arguments:
+        - players: A list of player-dictionary objects
 
-  Returns True if round has ended or False if not. If true results are
-  printed before return.
-  """
+    Returns Value:
+        - Boolean
+          True if round has ended or False if not. If true results are
+          printed before return.
 
-  stayed_and_not_busted = []
-  who_busted = []
-  for x in players:
-    #if anyone decides not to stay(continue playing)
-    #and this person is not busted
-    #return False (not end of game yet) 
-    if x["stayed"] == False and x["bust"] == False: 
-        return False
-    #if anyone decides to stay and is not busted
-    #store the score into list
-    elif x["stayed"] == True and x["bust"] == False: #if anyone decides not to stay and is not busted, store score into list
-        stayed_and_not_busted.append(x["score"])
-    elif x["bust"] == True:
-        who_busted.append(x["name"])
+    Implemented by:
+        - Tiong Le Megan 33332053
+    """
 
-  if len(who_busted)==len(players):
-    print("The game is a draw! No one wins :(")
-    return True
+    stayed_and_not_busted = []
+    who_busted = []
+    for x in players:
+        #if anyone decides not to stay(continue playing)
+        #and this person is not busted
+        #return False (not end of game yet) 
+        if x["stayed"] == False and x["bust"] == False: 
+            return False
+        #if anyone decides to stay and is not busted
+        #store the score into list
+        elif x["stayed"] == True and x["bust"] == False: #if anyone decides not to stay and is not busted, store score into list
+            stayed_and_not_busted.append(x["score"])
+        elif x["bust"] == True:
+            who_busted.append(x["name"])
 
-  highest_score = max(stayed_and_not_busted)
-  who_has_highest_score = []
-  for x in players:
-    if x["score"] == highest_score:
-      who_has_highest_score.append(x["name"])
-  
-  no_of_highest_score_players = len(who_has_highest_score)
-  if no_of_highest_score_players==1:
-    print(who_has_highest_score[0]+" is the winner!")
-    return True
-  elif no_of_highest_score_players>1:
-    print("The game is a draw! No one wins :(")
-    return True
+    if len(who_busted)==len(players):
+        print("The game is a draw! No one wins :(")
+        return True
 
-  return False
+    highest_score = max(stayed_and_not_busted)
+    who_has_highest_score = []
+    for x in players:
+        if x["score"] == highest_score:
+            who_has_highest_score.append(x["name"])
+    
+    no_of_highest_score_players = len(who_has_highest_score)
+    if no_of_highest_score_players==1:
+        print(who_has_highest_score[0]+" is the winner!")
+        return True
+    elif no_of_highest_score_players>1:
+        print("The game is a draw! No one wins :(")
+        return True
+
+    return False
 
 
 def solo_game():
@@ -335,6 +383,7 @@ def solo_game():
             break
         # if not go next round
         round += 1 
+
 
 def multiplayer_game(num_of_players):
   """
@@ -410,15 +459,36 @@ def multiplayer_game(num_of_players):
 def main():
   """
   Defines the main loop that allows the player to start a game, view rules or quit.
-  """
-  display_main_menu()
-  if int_input() == 1:
-    solo_game()
-  elif int_input() == 2:
-    multiplayer_game(3)
 
+  Implemented by:
+   - Xinrong Cai 33048118
+   - Xuanao Zhao 33332835
+  """
+
+  while True:
+    # dipslay main menu until game ends
+    display_main_menu()
+    input_value = int_input("Please select a choice: ", restricted_to=[1,2,3,4])
+    if input_value == 2:
+      # if user choose local multiplayer, prompt for user count
+      player_count = int_input("Please enter the number of players (Enter -1 to go back): ")
+      # if negative number, go back to main menu
+      if (player_count < 0):
+        continue
+      # run multiplayer game loop if not negative number
+      multiplayer_game(player_count)
+      # end game after game is complete
+      return
+    elif input_value == 1:
+      # if user choose solo game, run solo_game game loop
+      solo_game()
+      # end game after game is complete
+      return
+    elif input_value == 3:
+      display_rules()
+      # do not end game if user choose to display rules
+    else:
+      # if user chooses exit, exit main loop
+      return
 
 main()
-
-
-
